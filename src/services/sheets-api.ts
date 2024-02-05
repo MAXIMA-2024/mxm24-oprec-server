@@ -43,8 +43,8 @@ export const getAllData = async () => {
   return convertData(cells);
 };
 
-export const getDataByToken = async (token: string) => {
+export const getDataByNim = async (nim: string) => {
   const data = await getAllData();
 
-  return data.find((item) => item.token === token);
+  return data.find((item) => item.nim === nim);
 };

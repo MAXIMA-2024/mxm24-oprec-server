@@ -4,11 +4,12 @@ import {
   notFound,
   internalServerError,
   validationError,
+  parseZodError,
 } from "@/utils/responses";
 import ViteExpress from "vite-express";
 import ENV from "@/utils/env";
-import { getDataByToken } from "./services/sheets-api";
-import { tokenSchema } from "@/models/tokenModel";
+import { getDataByNim } from "./services/sheets-api";
+import { nimSchema } from "@/models/nimModel";
 
 const app = Express();
 
@@ -17,20 +18,20 @@ app.get("/api", (_req: Request, res: Response) => {
 });
 
 app.get(
-  "/api/data/:token",
-  async (req: Request<{ token: string }>, res: Response) => {
+  "/api/data/:nim",
+  async (req: Request<{ nim: string }>, res: Response) => {
     try {
-      const validateToken = await tokenSchema.safeParseAsync(req.params.token);
-      if (!validateToken.success) {
-        return validationError(res, validateToken.error.message);
+      const validateNim = await nimSchema.safeParseAsync(req.params.nim);
+      if (!validateNim.success) {
+        return validationError(res, parseZodError(validateNim.error));
       }
 
-      const data = await getDataByToken(validateToken.data);
+      const data = await getDataByNim(validateNim.data);
 
       if (!data) {
         return notFound(
           res,
-          `Tidak dapat menemukan kandidat dengan token ${req.params.token}`
+          `Tidak dapat menemukan kandidat dengan token ${validateNim.data}`
         );
       }
 

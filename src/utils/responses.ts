@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { ZodError } from "zod";
 
 export enum Responses {
   SUCCESS = 200,
@@ -74,4 +75,14 @@ export const internalServerError = (res: Response) => {
     .json(
       responseModel(Responses.INTERNAL_SERVER_ERROR, "Internal Server Error")
     );
+};
+
+export const parseZodError = <T = any>(error: ZodError<T>) => {
+  const flattened = error.flatten();
+
+  const fieldErrors = Object.keys(flattened.fieldErrors)
+    .map((key) => `${key} ${flattened.fieldErrors[key as keyof true]}`)
+    .join(", ");
+
+  return fieldErrors;
 };
