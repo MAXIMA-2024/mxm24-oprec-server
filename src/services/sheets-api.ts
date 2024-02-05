@@ -17,15 +17,14 @@ const doc = new GoogleSpreadsheet(ENV.APP_G_SHEET_ID, auth);
 
 const convertData = (cells: string[][]) =>
   cells.map((cell) => ({
-    token: cell[0],
-    nim: cell[1],
-    nama: cell[2],
-    divisi: cell[3],
-    divisiAlt: cell[4],
-    ruangan: cell[5],
-    tanggal: cell[6],
-    status: cell[7],
-    divisiFinal: cell[8],
+    nim: cell[0],
+    nama: cell[1],
+    divisi: cell[2],
+    divisiAlt: cell[3],
+    ruangan: cell[4],
+    tanggal: cell[5],
+    status: cell[6],
+    divisiFinal: cell[7],
   }));
 
 export const getAllData = async () => {
