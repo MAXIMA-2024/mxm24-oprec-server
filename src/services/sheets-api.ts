@@ -23,8 +23,9 @@ const convertData = (cells: string[][]) =>
     divisiAlt: cell[3],
     ruangan: cell[4],
     tanggal: cell[5],
-    status: cell[6],
-    divisiFinal: cell[7],
+    jam: cell[6],
+    status: cell[7],
+    divisiFinal: cell[8],
   }));
 
 export const getAllData = async () => {
